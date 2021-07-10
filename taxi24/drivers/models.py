@@ -27,7 +27,7 @@ class Person(models.Model):
         blank=True,
         db_column='document_type_id',
     )
-    document_number = models.CharField(max_length=15, unique=True)
+    document_number = models.CharField(max_length=15)
     gener = models.CharField(choices=GENER_CHOICES,
                              max_length=1, null=True, blank=True)
     active = models.BooleanField(default=True)
@@ -45,3 +45,5 @@ class Driver(Person):
         Model for registering drivers
     """
     age = models.PositiveIntegerField(null=True, blank=True)
+
+

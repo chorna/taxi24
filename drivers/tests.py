@@ -11,13 +11,15 @@ class DriverTests(APITestCase):
         driver1 = {
             'first_name': 'soy',
             'last_name': 'driver1',
+            'document_number': '12314444'
         }
         driver2 = {
             'first_name': 'soy',
             'last_name': 'driver2',
+            'document_number': '909090123'
         }
-        self.driver_1 = self.create_driver_helper(Driver, driver1)
-        self.driver_2 = self.create_driver_helper(Driver, driver2)
+        self.driver_1 = self.create_helper(Driver, driver1)
+        self.driver_2 = self.create_helper(Driver, driver2)
 
         self.client = APIClient()
 
