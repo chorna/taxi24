@@ -1,7 +1,7 @@
 from rest_framework import status
 from rest_framework.test import APIClient, APITestCase
 
-from .models import Driver
+from .models import Driver, Vehicle, Cab
 
 # Create your tests here.
 
@@ -70,6 +70,6 @@ class DriverTests(APITestCase):
         self.assertEquals(status.HTTP_200_OK, cab.status_code)
 
         # test get all cabs availables
-        availables = self.client.get(f"{path}availables/")
+        availables = self.client.get(f"{path}?state=1")
         self.assertEquals(status.HTTP_200_OK, availables.status_code)
         self.assertEquals(len(availables.json()), 1)

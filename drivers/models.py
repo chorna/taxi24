@@ -45,3 +45,41 @@ class Driver(Person):
         Model for registering drivers
     """
     age = models.PositiveIntegerField(null=True, blank=True)
+
+
+class Vehicle(models.Model):
+    """
+        Model for registering vehicles
+    """
+    brand = models.CharField(max_length=40, null=True, blank=True)
+    model = models.CharField(max_length=40, null=True, blank=True)
+    number_plate = models.CharField(max_length=10, unique=True)
+    active = models.BooleanField(default=True)
+
+    def __str__(self) -> str:
+        return f"{self.number_plate}"
+
+
+class Cab(models.Model):
+    """
+        Model for registering cabs
+    """
+    STATE_CHOICES = [
+        (0, 'Not Available'),
+        (1, 'Available'),
+    ]
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    driver_id = models.ForeignKey(
+        Driver,
+        on_delete=models.PROTECT,
+        db_column='driver_id',
+    )
+    vehicle_id = models.ForeignKey(
+        Vehicle,
+        on_delete=models.PROTECT,
+        db_column='vehicle_id',
+    )
+    state = models.IntegerField(choices=STATE_CHOICES, default=1)
+    start_date = models.DateTimeField(null=True, blank=True)
+    end_date = models.DateTimeField(null=True, blank=True)
+    # TODO: locations fields
