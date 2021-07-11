@@ -7,4 +7,4 @@ class RequestTripSerializer(serializers.ModelSerializer):
     class Meta:
         model = RequestTrip
         fields = '__all__'
-        fields_read_only = 'created_date',
+        read_only_fields = 'created_date',

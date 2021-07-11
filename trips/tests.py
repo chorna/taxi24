@@ -91,3 +91,7 @@ class TripTests(APITestCase):
         response5 = self.client.patch(f"{trip_url}{trip_id}/complete/")
         self.assertEquals(status.HTTP_204_NO_CONTENT, response5.status_code)
         self.assertTrue(response5.data.get('end_date', False))
+
+        # test create invoice after complete trip
+        response6 = self.client.patch(f"{trip_url}{trip_id}/invoices/")
+        self.assertEquals(len(response6.json()), 1)

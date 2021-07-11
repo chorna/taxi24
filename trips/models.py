@@ -51,3 +51,23 @@ class Trip(models.Model):
     end_date = models.DateTimeField(null=True, blank=True)
     price = models.FloatField()
     state = models.IntegerField(choices=STATE_CHOICES, default=2)
+
+
+class Invoice(models.Model):
+    STATE_CHOICES = [
+        (1, 'Open'),
+        (2, 'Paid')
+    ]
+    trip_id = models.ForeignKey(
+        Trip,
+        on_delete=models.PROTECT,
+        db_column='trip_id'
+        )
+    serie = models.CharField(max_length=4)
+    number = models.CharField(max_length=8)
+    tax_amount = models.FloatField(default=0.00)
+    base_amount = models.FloatField()
+
+    @property
+    def total_amount(self) -> float:
+        return self.tax_amount + self.base_amount
