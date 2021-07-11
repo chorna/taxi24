@@ -51,3 +51,11 @@ class TripTests(APITestCase):
         # test get all availables trips
         response3 = self.client.get(f"{path}?state=1")
         self.assertEquals(status.HTTP_200_OK, response3.status_code)
+
+        # test start trip
+        response4 = self.client.patch(f"{path}start/")
+        self.assertEquals(status.HTTP_204_NO_CONTENT, response4.status_code)
+
+        # test complete trip
+        response5 = self.client.patch(f"{path}complete/")
+        self.assertEquals(status.HTTP_204_NO_CONTENT, response5.status_code)
