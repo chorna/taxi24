@@ -69,7 +69,7 @@ class DriverTests(APITestCase):
         cab = self.client.get(f"{path}{self.cab2.id}/")
         self.assertEquals(status.HTTP_200_OK, cab.status_code)
 
-        # test get all cabs availables
+        # test get all availables cabs
         availables = self.client.get(f"{path}?state=1")
         self.assertEquals(status.HTTP_200_OK, availables.status_code)
         self.assertEquals(len(availables.json()), 1)
