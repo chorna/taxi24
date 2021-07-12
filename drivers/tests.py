@@ -1,3 +1,5 @@
+from django.contrib.gis.geos import Point
+
 from rest_framework import status
 from rest_framework.test import APIClient, APITestCase
 
@@ -34,11 +36,13 @@ class DriverTests(APITestCase):
             'driver_id': self.driver_1,
             'vehicle_id': self.vehicle_1,
             'state': 0,
+            'location': Point([100, 100.01]),
         }
         self.cab1 = self.create_helper(Cab, cab1_data)
         cab2_data = {
             'driver_id': self.driver_2,
             'vehicle_id': self.vehicle_2,
+            'location': Point(-50,-100),
         }
         self.cab2 = self.create_helper(Cab, cab2_data)
 
@@ -73,3 +77,7 @@ class DriverTests(APITestCase):
         availables = self.client.get(f"{path}?state=1")
         self.assertEquals(status.HTTP_200_OK, availables.status_code)
         self.assertEquals(len(availables.json()), 1)
+
+        # test get all cabs with a distance less than 3 to point
+        nearest = self.client.get(f"{path}nearest_to_point/?lat=100&long=100")
+        self.assertEquals(status.HTTP_200_OK, nearest.status_code)
