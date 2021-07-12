@@ -13,6 +13,12 @@ class TripViewSet(viewsets.ModelViewSet):
     queryset = Trip.objects.all()
     serializer_class = TripSerializer
 
+    @action(detail=False, methods=['get'])
+    def availables(self, request):
+        qs = self.get_queryset().filter(state=2)
+        serializer = self.serializer_class(qs, many=True)
+        return Response(serializer.data, status.HTTP_200_OK)
+
     @action(detail=True, methods=['patch'])
     def start(self, request, pk=None):
         obj = self.get_object()

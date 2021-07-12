@@ -79,7 +79,7 @@ class TripTests(APITestCase):
         self.assertEquals(status.HTTP_200_OK, response2.status_code)
 
         # test get all availables trips
-        response3 = self.client.get(f"{trip_url}?state=1")
+        response3 = self.client.get(f"{trip_url}availables/")
         self.assertEquals(status.HTTP_200_OK, response3.status_code)
 
         # test start trip
