@@ -1,6 +1,8 @@
 import uuid
 
 from django.db import models
+from django.contrib.gis.db import models as geo_models
+from django.contrib.gis.geos import Point
 
 # Create your models here.
 
@@ -82,4 +84,4 @@ class Cab(models.Model):
     state = models.IntegerField(choices=STATE_CHOICES, default=1)
     start_date = models.DateTimeField(null=True, blank=True)
     end_date = models.DateTimeField(null=True, blank=True)
-    # TODO: locations fields
+    location = geo_models.PointField(default=Point([0, 0]))

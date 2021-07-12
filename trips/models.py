@@ -1,6 +1,8 @@
 import uuid
 
 from django.db import models
+from django.contrib.gis.db import models as geo_models
+from django.contrib.gis.geos import Point
 
 from customers.models import Customer
 from drivers.models import Cab
@@ -27,7 +29,8 @@ class RequestTrip(models.Model):
         on_delete=models.PROTECT,
         db_column='cab_id',
     )
-    # TODO: locations
+    location = geo_models.PointField(default=Point([0, 0]))
+    location_dest = geo_models.PointField(default=Point([0, 0]))
     state = models.IntegerField(choices=STATE_CHOICES, default=1)
     created_date = models.DateTimeField(auto_now_add=True)
 
@@ -51,6 +54,7 @@ class Trip(models.Model):
     end_date = models.DateTimeField(null=True, blank=True)
     price = models.FloatField()
     state = models.IntegerField(choices=STATE_CHOICES, default=2)
+    location = geo_models.PointField(default=Point([0, 0]))
 
 
 class Invoice(models.Model):
